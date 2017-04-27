@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Clever_Subscriber>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Clever_Subscriber>
+    </modules>
+</config>

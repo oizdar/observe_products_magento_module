@@ -1,0 +1,20 @@
+web:
+  image: chadrien/magento2:5.6-apache
+  links:
+    - mariadb
+  ports:
+    - "80:80"
+  volumes:
+    - ".:/var/www"
+  environment:
+    MAGE_IS_DEVELOPER_MODE: 'true'
+
+mariadb:
+  ports:
+    - "3305:3306"
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpassword
+    MYSQL_DATABASE: magento2
+    MYSQL_USER: magento2
+    MYSQL_PASSWORD: mySQLpassword

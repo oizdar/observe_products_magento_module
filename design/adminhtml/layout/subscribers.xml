@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <subscriber_adminhtml_subscribers_index>
+        <reference name="content">
+            <block type="subscribe/adminhtml_subscribers" name="subscribers" />
+        </reference>
+    </subscriber_adminhtml_subscribers_index>
+</layout>

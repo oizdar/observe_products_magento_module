@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+<!--
+    Adds form to product page.
+-->
+    <catalog_product_view>
+        <reference name="head">
+            <block type="core/text" name="mapcontrol.script.block">
+                <action method="setText"><text><![CDATA[<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script type="text/javascript">$j = jQuery.noConflict()</script>]]></text></action>
+            </block>
+            <action method="addJs"><script>clever/subscriber_form.js</script></action>
+            <action method="addCss"><stylesheet>css/subscriber_form.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <reference name="product.info.additional">
+                <block type="subscriber/form" before="-" name="subscriber_form" template="subscriber/form.phtml" />
+            </reference>
+        </reference>
+    </catalog_product_view>
+
+<!--
+    Creates link in customer account menu
+-->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="review"><name>reviews</name><path>subscriber/customer/list</path><label>My Observed Products</label></action>
+        </reference>
+    </customer_account>
+
+<!--
+    Customer list
+-->
+    <subscriber_customer_list>
+        <update handle="customer_account" />
+        <reference name="content">
+            <reference name="my.account.wrapper">
+                <block type="subscriber/customer" name="subscriber_customer" template="subscriber/customer.phtml" />
+            </reference>
+        </reference>
+    </subscriber_customer_list>
+</layout>

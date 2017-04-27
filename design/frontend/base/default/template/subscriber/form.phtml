@@ -1,0 +1,85 @@
+<?php if (!$this->isAvailable()): ?>
+    <div class="subscriber-form" id="subscriber_form_block">
+        <h2>Subscribe product.</h2>
+        <?php if($this->isSubscribed()): ?>
+            <h5>Product already subscribed.</h5>
+        <?php else: ?>
+            <form id="subscriber_form" method="post">
+                <?php if (!$this->isLogged()): ?>
+                    <label for="email">E-mail:</label>
+                    <input type="text" name="email" id="subscriber_email" class="input-text required-entry validate-email">
+                <?php else: ?>
+                    <input type="hidden" name="customerId" id="customer_id" value="<?php echo $this->getCustomerId() ?>">
+                    <input type="hidden" name="email" id="subscriber_email" value="<?php echo $this->getEmail() ?>" class="required-entry validate-email">
+                <?php endif; ?>
+
+                <input type="hidden" name="productId" value="<?php echo $this->getProductId() ?>" class="required-entry">
+                <button type="submit" id="subscriber_button" class="button" onclick="subscriberForm.submit(this)"><span><span>Inform me about product availability</span></span></button>
+            </form>
+        <?php endif; ?>
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        function formSent(response) {
+            console.log(response);
+            $j('#subscriber_form').remove();
+            if(response.code === 'OK') {
+                var html = '<h5>'+response.message+'</h5>';
+            } else {
+                var html = '<h5>Error occurred</h5>';
+            }
+            $j('#subscriber_form_block').append(html);
+
+
+        }
+
+        function errorResponse(response) {
+            var form_error = $j('#form_subscriber_error');
+            if(form_error.length === 0) {
+                $j('#subscriber_form').append('<div class="validation-advice" id="form_subscriber_error">'+response.error+'</div>');
+            } else {
+                form_error.html(response.error);
+            };
+        }
+
+        var subscriberForm = new VarienForm('subscriber_form');
+        subscriberForm.submit = function(button) {
+            var form_error = $j('#form_subscriber_error');
+            if(form_error.length > 0) {
+                form_error.remove();
+            }
+            if (this.validator.validate()) {
+                if (button && button !== 'undefined') {
+                    button.disabled = true;
+                }
+                var email = this.form.email.value;
+                var productId = this.form.productId.value;
+                var customerId = null;
+                if(this.form.customerId) {
+                    customerId = this.form.customerId.value;
+                }
+                $j.ajax({
+                    url: '<?php echo $this->getFormAction() ?>',
+                    method: 'post',
+                    data: {
+                        email: email,
+                        productId: productId,
+                        customerId: customerId
+                    },
+                    success: function(response) {
+                        formSent(response);
+                    },
+                    error: function(response) {
+                        errorResponse(response.responseJSON);
+                        button.disabled = false;
+                    }
+                });
+            }
+        }
+        //]]>
+    </script>
+
+<?php endif; ?>
+
+
