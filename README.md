@@ -1,8 +1,8 @@
-#Magento module: 
 **_Magento 1.9_**
-###Add products to inform about availability.
+# Magento module: 
+### Add products to inform about availability.
 
-######Short module description:
+###### Short module description:
 
 * This module adds form under product description, when shop product isn't available in stock. 
 (Shop settings must allow to show unavailable products).
@@ -15,7 +15,7 @@ then only button is shown.
 * Administrator have additional grid with all observed products. Can see which emails belongs 
 /or not to registered users.
 
-#####Next steps:
+##### Next steps:
 - Remove observed products by user:
     + Add button on product page.
     * Add button on user-panel page.
